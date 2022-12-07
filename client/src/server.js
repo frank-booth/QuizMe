@@ -31,6 +31,18 @@ export default function () {
         let list = schema.lists.find(listId)
         return list.todos
       })
+      this.get('api/todos', (schema) => {
+        return schema.todos.all()
+      })
+      this.post('api/todos', (schema, request) => {
+        let attrs = JSON.parse(request.requestBody)
+        console.log(attrs)
+        return schema.todos.create(attrs)
+      })
+      this.delete('api/todos/:id', (schema, request) => {
+        let id = request.params.id
+        return schema.todos.find(id).destroy()
+      })
     }
   })
 }
